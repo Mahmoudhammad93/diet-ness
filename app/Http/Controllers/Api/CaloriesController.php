@@ -34,7 +34,6 @@ class CaloriesController extends Controller
     {
         try{
             $calory = Calory::where('id', $request->id)->first();
-            return typeOf($calory);
             if($calory){
                 $curruntDate = date('m/d/Y');
                 $date = Carbon::createFromFormat('m/d/Y', $curruntDate);
