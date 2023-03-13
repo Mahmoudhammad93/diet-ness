@@ -34,6 +34,7 @@ class CaloriesController extends Controller
     {
         try{
             $calory = Calory::where('id', $request->id)->first();
+            return typeOf($calory);
             if($calory){
                 $curruntDate = date('m/d/Y');
                 $date = Carbon::createFromFormat('m/d/Y', $curruntDate);
@@ -47,7 +48,9 @@ class CaloriesController extends Controller
                 ($calory->burned == 1)? $calory->burned = true : $calory->burned = false;
                 return responseSuccess(trans('admin.Updated Success'), $calory);
             }else{
-                return responseError(trans('admin.faild'));
+                return response()->json([
+                    'message' => 'Calory Not Found'
+                ]);
             }
         }catch(Exception $ex){
             return responseError($ex);
