@@ -34,17 +34,21 @@ class CaloriesController extends Controller
     {
         try{
             $calory = Calory::where('id', $request->id)->first();
-            $curruntDate = date('m/d/Y');
-            $date = Carbon::createFromFormat('m/d/Y', $curruntDate);
-            $day = $date->format('D'); // Current day name
-
-            $calory->update([
-                'total' => $request->total,
-                'day' => $day
-            ]);
-
-            ($calory->burned == 1)? $calory->burned = true : $calory->burned = false;
-            return responseSuccess(trans('admin.Updated Success'), $calory);
+            if($calory){
+                $curruntDate = date('m/d/Y');
+                $date = Carbon::createFromFormat('m/d/Y', $curruntDate);
+                $day = $date->format('D'); // Current day name
+    
+                $calory->update([
+                    'total' => $request->total,
+                    'day' => $day
+                ]);
+    
+                ($calory->burned == 1)? $calory->burned = true : $calory->burned = false;
+                return responseSuccess(trans('admin.Updated Success'), $calory);
+            }else{
+                return responseError(trans('admin.faild'));
+            }
         }catch(Exception $ex){
             return responseError($ex);
         }
