@@ -47,32 +47,13 @@ class HomeController extends Controller
             $subscription_details = Subscription::where('user_id',userLogin()->id)->first();
             
             
-            $total_calories = collect([
-                (object)[
-                    'id' => 1,
-                    'image' => "",
-                    'total' => 300,
-                    'day' => "Sat",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 2,
-                    'image' => "",
-                    'total' => 400,
-                    'day' => "Mon",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 3,
-                    'image' => "",
-                    'total' => 500,
-                    'day' => "Fri",
-                    'date' => "06.03.2023",
-                ],
-                
-            ]);
+            $total_calories = Calory::select([
+                'id', 'image', 'total', 'day', 'burned'
+            ])->get();
 
-            $calories_burned = Calory::whereBurned(1)->get();
+            $calories_burned = Calory::whereBurned(1)->select([
+                'id', 'image', 'total', 'day', 'burned'
+            ])->get();
 
             $result = new \stdClass();
             $result->sliders = SlidersResource::collection($slider);
