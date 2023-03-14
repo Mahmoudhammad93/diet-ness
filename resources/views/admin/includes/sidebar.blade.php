@@ -104,6 +104,18 @@
                             </ul>
                         </li>
 
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title">
+                                <i data-feather="archive"></i>
+                                <span>{{ trans('admin.Goals') }} <i class="fa fa-angle-right pull-right"
+                                        style="margin-top: 5px"></i></span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ aurl('goals') }}">{{ trans('admin.All Goals') }}</a></li>
+                                {{-- <li><a href="{{ aurl('packages/create') }}">{{ trans('admin.Add New Package') }}</a></li> --}}
+                            </ul>
+                        </li>
+
                         <li class="sidebar-main-title">
                             <div>
                                 <p>{{ trans('admin.Navigation') }}</p>

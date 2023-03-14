@@ -12,4 +12,8 @@ class Calory extends Model
     protected $fillable = [
         'image', 'total', 'day', 'burned', 'user_id'
     ];
+
+    public function getBurnedAttribute($attr){
+        return ($attr == 1)? $this->burned = true : $this->burned = false;
+    }
 }

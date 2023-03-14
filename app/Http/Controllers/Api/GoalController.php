@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Goal;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -16,24 +17,12 @@ class GoalController extends Controller
     public function index()
     {
         try{
-
-            $goals = collect([
-                (object)[
-                    'id' => 1,
-                    'image' => "",
-                    'name' => "Lose Weight",
-                ],
-                (object)[
-                    'id' => 1,
-                    'image' => "",
-                    'name' => "Build Muscles",
-                ],
-                (object)[
-                    'id' => 1,
-                    'image' => "",
-                    'name' => "Be Healther",
-                ],
-            ]);
+            $user = userLogin();
+            $goals = Goal::where('user_id', $user->id)
+            ->select([
+                'id', 'name', 'last_weight', 'goal_weight', 'sex', 'birthdate', 'user_id'
+            ])
+            ->get();
             return responseSuccess(trans('admin.Goals') , $goals);
 
         }catch(Exception $ex){
@@ -50,7 +39,10 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         try{
-            return responseSuccessMessage(trans('admin.Operation Success'));
+            $user = userLogin();
+            $request['user_id'] = $user->id;
+            $goal = Goal::create($request->all());
+            return responseSuccess(trans('admin.Operation Success'), $goal);
         }catch(Exception $ex){
             return responseError($ex);
         }

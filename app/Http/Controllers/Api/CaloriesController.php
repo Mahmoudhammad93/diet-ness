@@ -24,9 +24,6 @@ class CaloriesController extends Controller
     public function index(){
         $user = userLogin();
         $calories = Calory::where('user_id', $user->id)->get();
-        foreach($calories as $calory){
-            ($calory->burned == 1)? $calory->burned = true : $calory->burned = false;
-        }
         return responseSuccess(trans('web.success'), $calories);
     }
 
@@ -44,7 +41,6 @@ class CaloriesController extends Controller
                     'day' => $day
                 ]);
     
-                ($calory->burned == 1)? $calory->burned = true : $calory->burned = false;
                 return responseSuccess(trans('admin.Updated Success'), $calory);
             }else{
                 return response()->json([

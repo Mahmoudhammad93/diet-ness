@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CaloriesController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GoalsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PlanController;
@@ -148,6 +149,10 @@ Route::group(['middleware' => 'Lang'], function () {
 
             Route::group(['prefix' => 'calories'], function(){
                 Route::get('', [CaloriesController::class, 'index']);
+            });
+
+            Route::group(['prefix' => 'goals'], function(){
+                Route::get('', [GoalsController::class, 'index']);
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Slider\SlidersResource;
 use App\Http\Resources\Subscription\SubscriptionDetailsResource;
 use App\Http\Resources\Wallet\WalletResource;
+use App\Models\Calory;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
@@ -71,29 +72,7 @@ class HomeController extends Controller
                 
             ]);
 
-            $calories_burned = collect([
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Sat",
-                    'date' => "06.03.2023",
-                    'burned' => true,
-                ],
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Mon",
-                    'date' => "06.03.2023",
-                    'burned' => true,
-                ],
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Fri",
-                    'date' => "06.03.2023",
-                    'burned' => false,
-                ],
-            ]);
+            $calories_burned = Calory::whereBurned(1)->get();
 
             $result = new \stdClass();
             $result->sliders = SlidersResource::collection($slider);
@@ -168,26 +147,7 @@ class HomeController extends Controller
                 
             ]);
 
-            $calories_burned = collect([
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Sat",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Mon",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 3,
-                    'total' => 500,
-                    'day' => "Fri",
-                    'date' => "06.03.2023",
-                ],
-            ]);
+            $calories_burned = Calory::whereBurned(1)->get();
             
             $result = new \stdClass();
             $result->sliders = SlidersResource::collection($slider);
