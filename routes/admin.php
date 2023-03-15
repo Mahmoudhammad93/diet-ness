@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SlidersController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -153,6 +154,15 @@ Route::group(['middleware' => 'Lang'], function () {
 
             Route::group(['prefix' => 'goals'], function(){
                 Route::get('', [GoalsController::class, 'index']);
+            });
+
+            Route::group(['prefix' => 'sliders'], function(){
+                Route::get('', [SlidersController::class, 'index']);
+                Route::get('create', [SlidersController::class, 'create']);
+                Route::post('store', [SlidersController::class, 'store']);
+                Route::get('edit/{slider}', [SlidersController::class, 'edit']);
+                Route::post('update/{slider}', [SlidersController::class, 'update']);
+                Route::post('delete/{id}', [SlidersController::class, 'destroy']);
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {

@@ -3,8 +3,8 @@
     <div class="col-xl-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5>{{ $title }}<a href="{{ aurl('calories/create') }}" class="btn btn-pill btn-outline-primary btn-air-primary pull-right"><i
-                            class="fas fa-plus"></i> {{ trans('admin.Add New calory') }}</a></h5>
+                <h5>{{ $title }}<a href="{{ aurl('sliders/create') }}" class="btn btn-pill btn-outline-primary btn-air-primary pull-right"><i
+                            class="fas fa-plus"></i> {{ trans('admin.Add New slider') }}</a></h5>
             </div>
             <div class="card-block row">
                 <div class="col-sm-12 col-lg-12 col-xl-12">
@@ -13,29 +13,35 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{ trans('admin.image') }}</th>
-                                    <th>{{ trans('admin.total') }}</th>
-                                    <th>{{ trans('admin.day') }}</th>
-                                    <th>{{ trans('admin.burned') }}</th>
+                                    <th>{{ trans('admin.Image') }}</th>
+                                    <th>{{ trans('admin.Link') }}</th>
+                                    <th>{{ trans('admin.Status') }}</th>
                                     <th>{{ trans('admin.Created At') }}</th>
                                     <th>{{ trans('admin.Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($calories as $calory)
+                                @foreach ($sliders as $slider)
                                     <tr>
-                                        <td>{{ $calory->id }}</td>
-                                        <td>{{ $calory->image }}</td>
-                                        <td>{{ $calory->total }}</td>
-                                        <td>{{ $calory->day }}</td>
-                                        <td>{{ ($calory->burned)?'Burned': 'Not Burned' }}</td>
-                                        <td>{{ $calory->created_at }}</td>
+                                        <td>{{ $slider->id }}</td>
                                         <td>
-                                            <a href="{{ aurl('calories/edit/' . $calory->id) }}" class="btn btn-pill btn-outline-warning btn-air-warning"><i
+                                            <div class="image" style="width: 70px;height: 70px">
+                                                <img src="{{ $slider->image }}" alt="" style="width: 100%;height: 100%">
+                                            </div>
+                                        </td>
+                                        <td>{{ $slider->link }}</td>
+                                        <td>
+                                            <span class="badge badge-{{ ($slider->status == 1)?'success':'danger' }}">
+                                                {{ ($slider->status == 1)?'Active':'Deactive' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $slider->created_at }}</td>
+                                        <td>
+                                            <a href="{{ aurl('sliders/edit/' . $slider->id) }}" class="btn btn-pill btn-outline-warning btn-air-warning"><i
                                                     class="fas fa-edit"></i>
                                                 {{ trans('admin.Edit') }}</a>
 
-                                            <button data-id="{{ $calory->id }}" data-name="{{ $calory->name }}"
+                                            <button data-id="{{ $slider->id }}" data-name="{{ $slider->name }}"
                                                 id="delete" class="btn btn-pill btn-outline-danger btn-air-danger"><i class="fas fa-trash"></i>
                                                 {{ trans('admin.Delete') }}</button>
                                         </td>
@@ -43,28 +49,28 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $calories->links('admin.pagination.index') }}
+                        {{ $sliders->links('admin.pagination.index') }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" calory="dialog" aria-labelledby="tooltipmodal" aria-hidden="true"
+    <div class="modal fade" tabindex="-1" slider="dialog" aria-labelledby="tooltipmodal" aria-hidden="true"
         id="deleteModal">
-        <div class="modal-dialog modal-dialog-centered" calory="document">
+        <div class="modal-dialog modal-dialog-centered" slider="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">{{ trans('admin.Delete') }}</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ aurl('calories/delete') }}" method="POST">
+                <form action="{{ aurl('sliders/delete') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="col-md-12 text-center">
-                            <p style="margin-top: 10px;font-size: x-large" class="text-primary" id="caloryName"></p>
+                            <p style="margin-top: 10px;font-size: x-large" class="text-primary" id="sliderName"></p>
                         </div>
-                        <input type="hidden" id="calory_id" name="calory_id" value="">
+                        <input type="hidden" id="slider_id" name="slider_id" value="">
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
@@ -80,10 +86,10 @@
         <script>
             $(document).ready(function() {
                 $("#delete ").click(function() {
-                    var caloryName = $(this).attr('data-name');
-                    var caloryId = $(this).attr('data-id');
-                    $("#caloryName").text(caloryName);
-                    $("#calory_id").val(caloryId);
+                    var sliderName = $(this).attr('data-name');
+                    var sliderId = $(this).attr('data-id');
+                    $("#sliderName").text(sliderName);
+                    $("#slider_id").val(sliderId);
                     $("#deleteModal").modal('show');
                 });
 

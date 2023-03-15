@@ -7,6 +7,7 @@ use App\Http\Resources\Slider\SlidersResource;
 use App\Http\Resources\Subscription\SubscriptionDetailsResource;
 use App\Http\Resources\Wallet\WalletResource;
 use App\Models\Calory;
+use App\Models\Slider;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
@@ -22,23 +23,9 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $slider = collect([
-                (object)[
-                    'id' => 1,
-                    'url' => url('storage/sliders/01.jpg'),
-                    'link' => url("")
-                ],
-                (object)[
-                    'id' => 2,
-                    'url' => url('storage/sliders/02.jpg'),
-                    'link' => url("")
-                ],
-                (object)[
-                    'id' => 3,
-                    'url' => url('storage/sliders/03.jpg'),
-                    'link' => url("")
-                ],
-            ]);
+            $slider = Slider::whereStatus(1)->select([
+                'id', 'image', 'link'
+            ])->get();
 
             $wallet = (object)[
                 "total"=>number_format(10.123 ,3),
