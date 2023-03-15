@@ -17,7 +17,7 @@ class GoalCategoriesController extends Controller
     {
         return view('admin.goals.categories.index', [
             'title' => trans('admin.categories'),
-            'categories' => GoalCategory::whereStatus(1)->select([
+            'categories' => GoalCategory::select([
                 'id',
                 app()->getLocale().'_name as name',
                 'image',

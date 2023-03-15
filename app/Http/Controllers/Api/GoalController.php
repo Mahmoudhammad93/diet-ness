@@ -19,7 +19,7 @@ class GoalController extends Controller
     {
         try{
             $user = userLogin();
-            $goalCategories = GoalCategory::select([
+            $goalCategories = GoalCategory::whereStatus(1)->select([
                 'id', app()->getLocale().'_name as name', 'image'
             ])
             ->get();
