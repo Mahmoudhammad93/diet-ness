@@ -32,7 +32,7 @@
                                         <td>{{ $slider->link }}</td>
                                         <td>
                                             <span class="badge badge-{{ ($slider->status == 1)?'success':'danger' }}">
-                                                {{ ($slider->status == 1)?'Active':'Deactive' }}
+                                                {{ ($slider->status == 1)?trans('admin.active'):trans('admin.DeActive') }}
                                             </span>
                                         </td>
                                         <td>{{ $slider->created_at }}</td>
