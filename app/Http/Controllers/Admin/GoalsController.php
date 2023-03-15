@@ -17,7 +17,17 @@ class GoalsController extends Controller
     {
         return view('admin.goals.index', [
             'title' => trans('admin.goals'),
-            'goals' =>  Goal::paginate(30)
+            'goals' =>  Goal::with(['user' => function($query){
+                $query->select([
+                    'id',
+                    'name'
+                ]);
+            },'golaCategory' => function($query){
+                $query->select([
+                    'id',
+                    app()->getLocale().'_name as name'
+                ]);
+            }])->paginate(30)
         ]);
     }
 
@@ -39,7 +49,7 @@ class GoalsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

@@ -114,6 +114,10 @@
                                 <li><a href="{{ aurl('goals') }}">{{ trans('admin.All Goals') }}</a></li>
                                 {{-- <li><a href="{{ aurl('packages/create') }}">{{ trans('admin.Add New Package') }}</a></li> --}}
                             </ul>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ aurl('goals/categories') }}">{{ trans('admin.Goal Categories') }}</a></li>
+                                {{-- <li><a href="{{ aurl('packages/create') }}">{{ trans('admin.Add New Package') }}</a></li> --}}
+                            </ul>
                         </li>
 
                         <li class="sidebar-list">

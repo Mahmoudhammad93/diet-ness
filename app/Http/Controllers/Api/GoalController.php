@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Goal;
+use App\Models\GoalCategory;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -18,12 +19,11 @@ class GoalController extends Controller
     {
         try{
             $user = userLogin();
-            $goals = Goal::where('user_id', $user->id)
-            ->select([
-                'id', 'name', 'last_weight', 'goal_weight', 'sex', 'birthdate', 'user_id'
+            $goalCategories = GoalCategory::select([
+                'id', app()->getLocale().'_name as name', 'image'
             ])
             ->get();
-            return responseSuccess(trans('admin.Goals') , $goals);
+            return responseSuccess(trans('admin.Goal Categories') , $goalCategories);
 
         }catch(Exception $ex){
             return responseError($ex);

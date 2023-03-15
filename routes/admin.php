@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ComponentsController;
 use App\Http\Controllers\Admin\ContactsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GoalCategoriesController;
 use App\Http\Controllers\Admin\GoalsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PackageController;
@@ -157,6 +158,11 @@ Route::group(['middleware' => 'Lang'], function () {
 
             Route::group(['prefix' => 'goals'], function(){
                 Route::get('', [GoalsController::class, 'index']);
+                Route::get('categories', [GoalCategoriesController::class, 'index']);
+                Route::get('categories/create', [GoalCategoriesController::class, 'create']);
+                Route::post('categories/store', [GoalCategoriesController::class, 'store']);
+                Route::get('categories/edit/{goalCategory}', [GoalCategoriesController::class, 'edit']);
+                Route::post('categories/update/{goalCategory}', [GoalCategoriesController::class, 'update']);
             });
 
             Route::group(['prefix' => 'sliders'], function(){
