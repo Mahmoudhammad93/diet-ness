@@ -118,6 +118,7 @@ Route::group(['middleware' => 'Lang'], function () {
             Route::post('create', [GoalController::class, 'store']);
         });
 
-        Route::post('contact-us', [ContactUsController::class, 'contactUs']);
     });
+
+    Route::post('contact-us', [ContactUsController::class, 'contactUs']);
 });
