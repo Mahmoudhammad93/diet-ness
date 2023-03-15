@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CaloriesController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GoalsController;
@@ -162,7 +163,16 @@ Route::group(['middleware' => 'Lang'], function () {
                 Route::post('store', [SlidersController::class, 'store']);
                 Route::get('edit/{slider}', [SlidersController::class, 'edit']);
                 Route::post('update/{slider}', [SlidersController::class, 'update']);
-                Route::post('delete/{id}', [SlidersController::class, 'destroy']);
+                Route::post('delete/{slider}', [SlidersController::class, 'destroy']);
+            });
+
+            Route::group(['prefix' => 'categories'], function(){
+                Route::get('', [CategoriesController::class, 'index']);
+                Route::get('create', [CategoriesController::class, 'create']);
+                Route::post('store', [CategoriesController::class, 'store']);
+                Route::get('edit/{category}', [CategoriesController::class, 'edit']);
+                Route::post('update/{category}', [CategoriesController::class, 'update']);
+                Route::post('delete/{id}', [CategoriesController::class, 'destroy']);
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {
