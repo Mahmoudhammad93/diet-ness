@@ -131,6 +131,18 @@
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title">
                                 <i data-feather="archive"></i>
+                                <span>{{ trans('admin.components') }} <i class="fa fa-angle-right pull-right"
+                                        style="margin-top: 5px"></i></span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ aurl('components') }}">{{ trans('admin.All Components') }}</a></li>
+                                {{-- <li><a href="{{ aurl('packages/create') }}">{{ trans('admin.Add New Package') }}</a></li> --}}
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title">
+                                <i data-feather="archive"></i>
                                 <span>{{ trans('admin.Sliders') }} <i class="fa fa-angle-right pull-right"
                                         style="margin-top: 5px"></i></span>
                             </a>

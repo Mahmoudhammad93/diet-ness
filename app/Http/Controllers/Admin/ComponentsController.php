@@ -15,7 +15,14 @@ class ComponentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.components.index', [
+            'title' => trans('admin.Components'),
+            'components' => Component::select([
+                'id',
+                app()->getLocale().'_name as name',
+                'created_at'
+            ])->paginate(30)
+        ]);
     }
 
     /**
@@ -25,7 +32,9 @@ class ComponentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.components.create',[
+            'title' => trans('admin.create')
+        ]);
     }
 
     /**
@@ -36,7 +45,14 @@ class ComponentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'ar_name' => 'required',
+            'en_name' => 'required'
+        ]);
+
+        Component::create($request->all());
+
+        return redirect('admin/components');
     }
 
     /**
@@ -58,7 +74,10 @@ class ComponentsController extends Controller
      */
     public function edit(Component $component)
     {
-        //
+        return view('admin.components.edit', [
+            'title' => trans('admin.Edit'),
+            'component' => $component
+        ]);
     }
 
     /**
@@ -70,7 +89,9 @@ class ComponentsController extends Controller
      */
     public function update(Request $request, Component $component)
     {
-        //
+        $component->update($request->all());
+
+        return redirect('admin/components');
     }
 
     /**

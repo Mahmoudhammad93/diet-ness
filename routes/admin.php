@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CaloriesController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ComponentsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GoalsController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -173,6 +174,15 @@ Route::group(['middleware' => 'Lang'], function () {
                 Route::get('edit/{category}', [CategoriesController::class, 'edit']);
                 Route::post('update/{category}', [CategoriesController::class, 'update']);
                 Route::post('delete/{id}', [CategoriesController::class, 'destroy']);
+            });
+
+            Route::group(['prefix' => 'components'], function(){
+                Route::get('', [ComponentsController::class, 'index']);
+                Route::get('create', [ComponentsController::class, 'create']);
+                Route::post('store', [ComponentsController::class, 'store']);
+                Route::get('edit/{component}', [ComponentsController::class, 'edit']);
+                Route::post('update/{component}', [ComponentsController::class, 'update']);
+                Route::post('delete/{id}', [ComponentsController::class, 'destroy']);
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {
