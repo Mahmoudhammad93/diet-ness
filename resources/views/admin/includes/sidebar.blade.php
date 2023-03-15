@@ -216,7 +216,7 @@
                                 <li><a href="{{ aurl('settings/terms') }}">{{ trans('admin.Terms And Conditions') }}</a></li>
                                 <li><a href="{{ aurl('settings/privacy') }}">{{ trans('admin.Privacy And Policy') }}</a></li>
                                 <li><a href="{{ aurl('settings/about') }}">{{ trans('admin.About Us') }}</a></li>
-                                <li><a href="{{ aurl('settings/contacts') }}">{{ trans('admin.Contact Us') }}</a></li>
+                                <li><a href="{{ aurl('contacts') }}">{{ trans('admin.Contact Us') }}</a></li>
                             </ul>
                         </li>
                     </ul>

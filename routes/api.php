@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CaloriesController;
+use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\GoalController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\PackageController;
@@ -116,5 +117,7 @@ Route::group(['middleware' => 'Lang'], function () {
             Route::get('', [GoalController::class, 'index']);
             Route::post('create', [GoalController::class, 'store']);
         });
+
+        Route::post('contact-us', [ContactUsController::class, 'contactUs']);
     });
 });

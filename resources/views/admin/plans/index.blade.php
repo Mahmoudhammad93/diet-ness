@@ -21,7 +21,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($packages as $package)
+                                @foreach ($plans as $package)
                                     <tr>
                                         <td>{{ $package->id }}</td>
                                         <td>{{ $package->name }}</td>
@@ -45,7 +45,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $packages->links('admin.pagination.index') }}
+                        {{ $plans->links('admin.pagination.index') }}
                     </div>
                 </div>
             </div>

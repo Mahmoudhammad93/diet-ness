@@ -18,7 +18,7 @@ class PlanController extends Controller
     public function index($id)
     {
         $package = Package::where('id', $id)->first();
-        $plans = Plan::where('package_id', $package->id)->with('meals')->get();
+        $plans = Plan::where('package_id', $package->id)->with('meals')->paginate(30);
 
         return view('admin.plans.index', [
             'title' => $package->name,

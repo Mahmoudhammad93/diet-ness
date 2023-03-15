@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CaloriesController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ComponentsController;
+use App\Http\Controllers\Admin\ContactsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GoalsController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -190,6 +191,10 @@ Route::group(['middleware' => 'Lang'], function () {
                 Route::get('ended', [SubscriptionController::class, 'ended']);
                 Route::get('started', [SubscriptionController::class, 'started']);
                 Route::get('view/{id}', [SubscriptionController::class, 'show']);
+            });
+
+            Route::group(['prefix' => 'contacts'], function () {
+                Route::get('', [ContactsController::class, 'index']);
             });
 
             Route::group(['prefix' => 'sales'], function () {
