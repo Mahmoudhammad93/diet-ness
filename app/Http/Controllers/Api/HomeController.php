@@ -106,6 +106,8 @@ class HomeController extends Controller
             $plan = Plan::whereId($subscription->plan_id)->first();
             $package = Package::whereId($plan->package_id)->first();
 
+            // return $plan;
+
             $package = new PackageResource(Package::with('plans.meals.image')->where('id',$package->id)->first());
             return responseSuccess($package->name, $package);
         } catch (Exception $ex) {
