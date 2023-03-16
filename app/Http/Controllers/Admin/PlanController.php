@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Package;
 use App\Models\Plan;
 use App\Models\PlanMeal;
@@ -34,9 +35,11 @@ class PlanController extends Controller
     public function create($id)
     {
         $package = Package::where('id', $id)->first();
+        $categories = Category::get();
         return view('admin.plans.create', [
             'title' => $package->name . " - " . trans('admin.Add New Plan'),
-            'package' => $package
+            'package' => $package,
+            'categories' => $categories
         ]);
     }
 

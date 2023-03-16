@@ -14,6 +14,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ trans('admin.Name') }}</th>
+                                    <th>{{ trans('admin.Main Category') }}</th>
                                     <th>{{ trans('admin.Created At') }}</th>
                                     <th>{{ trans('admin.Actions') }}</th>
                                 </tr>
@@ -23,6 +24,7 @@
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
+                                        <td>{{ ($category->parent_id != 0)?$category->main_category->name: 'Main Category' }}</td>
                                         <td>{{ $category->created_at }}</td>
                                         <td>
                                             <a href="{{ aurl('categories/edit/' . $category->id) }}" class="btn btn-pill btn-outline-warning btn-air-warning"><i

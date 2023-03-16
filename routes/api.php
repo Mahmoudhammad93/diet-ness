@@ -118,6 +118,10 @@ Route::group(['middleware' => 'Lang'], function () {
             Route::post('create', [GoalController::class, 'store']);
         });
 
+        Route::group(['prefix' => 'menu'], function () {
+            Route::get('', [HomeController::class, 'getMenu']);
+        });
+
     });
 
     Route::post('contact-us', [ContactUsController::class, 'contactUs']);

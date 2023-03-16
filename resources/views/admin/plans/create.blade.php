@@ -107,6 +107,21 @@
 
                                 <div class="row">
                                     <div class="form-group col-md-6">
+                                        <label class="floating-label" for="meal_name_ar">{{ trans('admin.Name Ar') }}
+                                            <span class="redStar">*</span></label>
+                                        <input type="text" name="meal_name_ar[]" class="form-control"
+                                            id="meal_name_ar">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="floating-label" for="meal_name_en">{{ trans('admin.Name En') }}
+                                            <span class="redStar">*</span></label>
+                                        <input type="text" name="meal_name_en[]" class="form-control"
+                                            id="meal_name_en">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
                                         <label class="floating-label"
                                             for="meal_details_ar">{{ trans('admin.Details Ar') }}
                                             <span class="redStar">*</span></label>

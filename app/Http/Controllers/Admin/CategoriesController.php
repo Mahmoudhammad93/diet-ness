@@ -15,14 +15,32 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        $categories = Category::select([
+            'id',
+            app()->getLocale().'_name as name',
+            'parent_id',
+            'created_at'
+        ])->paginate(30);
+
+
+        foreach($categories as $category){
+            $category->main_category = Category::select([
+                app()->getLocale().'_name as name'
+            ])->where('id', $category->parent_id)->first();
+        }
+        
         return view('admin.categories.index', [
             'title' => trans('admin.Categories'),
-            'categories' => Category::select([
-                'id',
-                app()->getLocale().'_name as name',
-                'created_at'
-            ])->paginate(30)
+            'categories' => $categories
         ]);
+    }
+
+    public function getMainCategories(){
+        $categories = Category::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->where('parent_id', 0)->get();
+        return $categories;
     }
 
     /**

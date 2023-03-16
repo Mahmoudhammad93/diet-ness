@@ -176,6 +176,7 @@ Route::group(['middleware' => 'Lang'], function () {
 
             Route::group(['prefix' => 'categories'], function(){
                 Route::get('', [CategoriesController::class, 'index']);
+                Route::get('/main_categories', [CategoriesController::class, 'getMainCategories'])->name('admin.get.main_categories');
                 Route::get('create', [CategoriesController::class, 'create']);
                 Route::post('store', [CategoriesController::class, 'store']);
                 Route::get('edit/{category}', [CategoriesController::class, 'edit']);

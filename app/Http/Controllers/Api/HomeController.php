@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Package\PackageResource;
 use App\Http\Resources\Slider\SlidersResource;
 use App\Http\Resources\Subscription\SubscriptionDetailsResource;
 use App\Http\Resources\Wallet\WalletResource;
 use App\Models\Calory;
+use App\Models\Package;
+use App\Models\Plan;
 use App\Models\Slider;
 use App\Models\Subscription;
 use Carbon\Carbon;
@@ -62,23 +65,9 @@ class HomeController extends Controller
     public function guest()
     {
         try {
-            $slider = collect([
-                (object)[
-                    'id' => 1,
-                    'url' => url('storage/sliders/01.jpg'),
-                    'link' => url("")
-                ],
-                (object)[
-                    'id' => 2,
-                    'url' => url('storage/sliders/02.jpg'),
-                    'link' => url("")
-                ],
-                (object)[
-                    'id' => 3,
-                    'url' => url('storage/sliders/03.jpg'),
-                    'link' => url("")
-                ],
-            ]);
+            $slider = Slider::whereStatus(1)->select([
+                'id', 'image', 'link'
+            ])->get();
 
             $wallet = (object)[
                 "total"=>number_format(10.123 ,3),
@@ -90,32 +79,13 @@ class HomeController extends Controller
                 'end_date'=>Carbon::now()->addDays(70)->format('Y-m-d')
             ];
 
-            $total_calories = collect([
-                (object)[
-                    'id' => 1,
-                    'image' => "",
-                    'total' => 300,
-                    'day' => "Sat",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 2,
-                    'image' => "",
-                    'total' => 400,
-                    'day' => "Mon",
-                    'date' => "06.03.2023",
-                ],
-                (object)[
-                    'id' => 3,
-                    'image' => "",
-                    'total' => 500,
-                    'day' => "Fri",
-                    'date' => "06.03.2023",
-                ],
-                
-            ]);
+            $total_calories = Calory::select([
+                'id', 'image', 'total', 'day', 'date', 'burned'
+            ])->get();
 
-            $calories_burned = Calory::whereBurned(1)->get();
+            $calories_burned = Calory::whereBurned(1)->select([
+                'id', 'image', 'total', 'day', 'date', 'burned'
+            ])->get();
             
             $result = new \stdClass();
             $result->sliders = SlidersResource::collection($slider);
@@ -124,6 +94,20 @@ class HomeController extends Controller
             $result->total_calories = $total_calories;
             $result->calories_burned = $calories_burned;
             return responseSuccess(trans('admin.Home'), $result);
+        } catch (Exception $ex) {
+            return responseError($ex);
+        }
+    }
+
+    public function getMenu(){
+        try {
+            $user = userLogin();
+            $subscription = Subscription::where('user_id', $user->id)->first();
+            $plan = Plan::whereId($subscription->plan_id)->first();
+            $package = Package::whereId($plan->package_id)->first();
+
+            $package = new PackageResource(Package::with('plans.meals.image')->where('id',$package->id)->first());
+            return responseSuccess($package->name, $package);
         } catch (Exception $ex) {
             return responseError($ex);
         }

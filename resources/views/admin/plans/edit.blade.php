@@ -149,6 +149,20 @@
                         <div class="row">
                             <div class="col-md-11">
                                 <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Categories') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">الافطار</option>
+                                            <option value="">الغداء</option>
+                                            <option value="">العشاء</option>
+                                            <option value="">سناكس</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="floating-label" for="meal_name_ar">{{ trans('admin.Name Ar') }}
                                             <span class="redStar">*</span></label>
