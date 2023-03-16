@@ -35,11 +35,11 @@ class HomeController extends Controller
             
             
             $total_calories = Calory::select([
-                'id', 'image', 'total', 'day', 'burned'
+                'id', 'image', 'total', 'day', 'date', 'burned'
             ])->get();
 
             $calories_burned = Calory::whereBurned(1)->select([
-                'id', 'image', 'total', 'day', 'burned'
+                'id', 'image', 'total', 'day', 'date', 'burned'
             ])->get();
 
             $result = new \stdClass();

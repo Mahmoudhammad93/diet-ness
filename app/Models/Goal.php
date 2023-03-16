@@ -10,7 +10,7 @@ class Goal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'last_weight', 'goal_weight', 'sex', 'birthdate', 'user_id', 'goal_id'
+        'name', 'latest_weight', 'goal_weight', 'sex', 'birthdate', 'user_id', 'goal_id', 'height', 'fat'
     ];
 
     public function golaCategory(){

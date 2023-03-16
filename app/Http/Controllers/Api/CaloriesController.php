@@ -35,10 +35,12 @@ class CaloriesController extends Controller
                 $curruntDate = date('m/d/Y');
                 $date = Carbon::createFromFormat('m/d/Y', $curruntDate);
                 $day = $date->format('D'); // Current day name
+
     
                 $calory->update([
                     'total' => $request->total,
-                    'day' => $day
+                    'day' => $day,
+                    'date' => $date->format('d-m-Y')
                 ]);
     
                 return responseSuccess(trans('admin.Updated Success'), $calory);

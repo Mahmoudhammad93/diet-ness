@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('goals', function (Blueprint $table) {
-            $table->id();
-            $table->integer('goal_weight');
-            $table->string('sex');
-            $table->string('birthdate');
-            $table->integer('user_id');
-            $table->timestamps();
+        Schema::table('calories', function (Blueprint $table) {
+            $table->string('date');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goals');
+        Schema::table('calories', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -10,7 +10,7 @@ class Calory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'image', 'total', 'day', 'burned', 'user_id'
+        'image', 'total', 'day', 'burned', 'user_id', 'date'
     ];
 
     public function getBurnedAttribute($attr){
