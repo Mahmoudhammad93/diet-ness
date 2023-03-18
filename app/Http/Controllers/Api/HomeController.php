@@ -122,16 +122,6 @@ class HomeController extends Controller
             
             $data = Package::whereId($plan->package_id)->first();
 
-            // $plan->meals = $plan_meals;
-
-
-            // foreach($plan_meals as $meal){
-            //     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
-            //     foreach($components as $c){
-            //         $meal->components = Component::whereId($c->component_id)->get();
-            //     }
-            // }
-
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
                     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
@@ -145,6 +135,8 @@ class HomeController extends Controller
                     if($meal->category_id == $cate->id){
                         $cate_meals[] = $meal;
                     }
+
+                    return $cate_meals;
 
                     $plan[$cate->name] = $cate_meals;
                 }
