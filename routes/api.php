@@ -117,6 +117,12 @@ Route::group(['middleware' => 'Lang'], function () {
             Route::get('', [GoalController::class, 'index']);
             Route::post('create', [GoalController::class, 'store']);
         });
+        
+        Route::group(['prefix' => 'foods'], function() {
+            Route::get('options', [HomeController::class, 'options']);
+            Route::get('dislike/get', [HomeController::class, 'getDislikes']);
+            Route::post('dislike/create', [HomeController::class, 'addDislikes']);
+        });
 
         Route::group(['prefix' => 'menu'], function () {
             Route::get('', [HomeController::class, 'getMenu']);

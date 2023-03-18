@@ -10,6 +10,7 @@ use App\Http\Resources\Wallet\WalletResource;
 use App\Models\Calory;
 use App\Models\Category;
 use App\Models\Component;
+use App\Models\Dislike;
 use App\Models\MealComponents;
 use App\Models\Package;
 use App\Models\Plan;
@@ -152,6 +153,50 @@ class HomeController extends Controller
         } catch (Exception $ex) {
             return responseError($ex);
         }
+    }
+
+    public function options(){
+        
+    }
+
+    public function getDislikes(Request $request){
+        $user = userLogin();
+        $dislikes = Dislike::select([
+            'id',
+            'category_id',
+            'meal_id',
+            'component_id',
+            'user_id'
+        ])->with(['category' => function($query) use($request) {
+            $query->select([
+                'id',
+                $request->header('Accept-Language').'_name as name'
+            ]);
+        }, 'meals' => function($query) use($request) {
+            $query->select([
+                'id',
+                'details_'.$request->header('Accept-Language').' as details'
+            ]);
+        }])->where('user_id', $user->id)->get();
+
+        foreach($dislikes as $dislike){
+            $dislike->component = Component::select('id', $request->header('Accept-Language').'_name as name')->whereId($dislike->component_id)->first();
+        }
+
+
+
+        return responseSuccess(trans('admin.success'), $dislikes);
+    }
+
+    public function addDislikes(Request $request){
+        $user = userLogin();
+        $dislike = Dislike::create([
+            'category_id' => $request->category_id,
+            'meal_id' => $request->meal_id,
+            'component_id' => $request->component_id,
+            'user_id' => $user->id
+        ]);
+        return responseSuccess(trans('admin.success'), $dislike);
     }
 
     /**
