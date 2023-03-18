@@ -122,7 +122,6 @@ class HomeController extends Controller
             
             $data = Package::whereId($plan->package_id)->first();
 
-            return $plan_meals;
 
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
@@ -138,7 +137,6 @@ class HomeController extends Controller
                         $cate_meals[] = $meal;
                     }
 
-                    return $cate_meals;
 
                     $plan[$cate->name] = $cate_meals;
                 }
