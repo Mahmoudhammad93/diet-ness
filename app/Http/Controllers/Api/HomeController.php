@@ -132,7 +132,7 @@ class HomeController extends Controller
                     if($rate != null){
                         $meal->rate = $rate;
                     }else{
-                        $rate->num = 0;
+                        $rate['num'] = 0;
                         $meal->rate = $rate;
                     }
                     foreach($components as $c){
