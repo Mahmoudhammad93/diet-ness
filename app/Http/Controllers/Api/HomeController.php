@@ -129,7 +129,7 @@ class HomeController extends Controller
                 foreach($plan_meals as $meal){
                     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
                     $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
-                    ($rate != null)?$meal->$rate = $rate: $meal->$rate = 0;
+                    ($rate != null)?$meal->rate = $rate: $meal->rate = 0;
                     foreach($components as $c){
                         $meal->components = Component::select([
                             'id',
