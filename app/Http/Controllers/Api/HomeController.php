@@ -15,6 +15,7 @@ use App\Models\MealComponents;
 use App\Models\Package;
 use App\Models\Plan;
 use App\Models\PlanMeal;
+use App\Models\Rate;
 use App\Models\Slider;
 use App\Models\Subscription;
 use Carbon\Carbon;
@@ -127,6 +128,7 @@ class HomeController extends Controller
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
                     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
+                    $meal->rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
                     foreach($components as $c){
                         $meal->components = Component::select([
                             'id',
@@ -183,8 +185,6 @@ class HomeController extends Controller
             $dislike->component = Component::select('id', $request->header('Accept-Language').'_name as name')->whereId($dislike->component_id)->first();
         }
 
-
-
         return responseSuccess(trans('admin.success'), $dislikes);
     }
 
@@ -197,6 +197,24 @@ class HomeController extends Controller
             'user_id' => $user->id
         ]);
         return responseSuccess(trans('admin.success'), $dislike);
+    }
+
+    public function addRate(Request $request){
+        $user = userLogin();
+
+        $row = Rate::where('meal_id', $request->meal_id)->where('user_id', $user->id)->first();
+        if($row){
+            $row->update([
+                'num' => $request->num
+            ]);
+        } else {
+            $row = Rate::create([
+                'meal_id' => $request->meal_id,
+                'user_id' => $user->id,
+                'num' => $request->num
+            ]);
+        }
+        return responseSuccess(trans('admin.success'), $row);
     }
 
     /**
