@@ -40,6 +40,7 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/custom.css">
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/jquery.multiselect.css') }}">
     @if (lang() == 'ar')
         <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/custom-rtl.css">
     @endif

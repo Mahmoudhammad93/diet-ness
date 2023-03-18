@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Component;
+use App\Models\Meal;
+use App\Models\MealComponents;
 use App\Models\Package;
 use App\Models\Plan;
 use App\Models\PlanMeal;
@@ -35,11 +38,26 @@ class PlanController extends Controller
     public function create($id)
     {
         $package = Package::where('id', $id)->first();
-        $categories = Category::get();
+        $categories = Category::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+        $meals = Meal::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+        $components = Component::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+
+
         return view('admin.plans.create', [
             'title' => $package->name . " - " . trans('admin.Add New Plan'),
             'package' => $package,
-            'categories' => $categories
+            'categories' => $categories,
+            'meals' => $meals,
+            'components' => $components
         ]);
     }
 
@@ -51,6 +69,7 @@ class PlanController extends Controller
      */
     public function store(Request $request, $id)
     {
+        // return $request;
         $request->validate([
             'name_ar'           => 'required',
             'name_en'           => 'required',
@@ -108,20 +127,29 @@ class PlanController extends Controller
             ]);
         }
 
-        if ($request->meal_name_ar) {
-            foreach ($request->meal_name_ar as $index => $meal_ar) {
-                if ($request->meal_name_ar[$index] != "") {
+        if ($request->meal_details_ar) {
+            foreach ($request->meal_details_ar as $index => $meal_ar) {
+                if ($request->meal_details_ar[$index] != "") {
                     $meal = new PlanMeal();
                     $meal->plan_id = $plan->id;
-                    $meal->name_ar = $request->meal_name_ar[$index];
-                    $meal->name_en = $request->meal_name_en[$index];
+                    // $meal->name_ar = $request->meal_name_ar[$index];
+                    // $meal->name_en = $request->meal_name_en[$index];
                     $meal->price = $request->meal_price[$index];
                     $meal->details_ar = $request->meal_details_ar[$index];
                     $meal->details_en = $request->meal_details_en[$index];
                     $meal->quantity = $request->quantity[$index];
                     $meal->max = $request->max[$index];
                     $meal->min = $request->min[$index];
+                    $meal->meal_id = $request->meal[$index];
+                    $meal->category_id = $request->category[$index];
                     $meal->save();
+
+                    foreach($request->components as $component){
+                        MealComponents::create([
+                            'component_id' => $component,
+                            'plan_meal_id' => $meal->id
+                        ]);
+                    }
                 }
             }
         }
@@ -160,10 +188,31 @@ class PlanController extends Controller
      */
     public function edit($id)
     {
+        // return gettype(app()->getLocale());
         $plan = Plan::where('id', $id)->with('package', 'meals')->first();
+        foreach($plan->meals as $meal){
+            $meal->components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->pluck('component_id');
+        }
+        // return $plan;
+        $categories = Category::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+        $meals = Meal::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+        $components = Component::select([
+            'id',
+            app()->getLocale().'_name as name'
+        ])->get();
+        
         return view('admin.plans.edit', [
             'title' => $plan->package->name . " - " . $plan->name,
-            'plan' => $plan
+            'plan' => $plan,
+            'categories' => $categories,
+            'meals' => $meals,
+            'components' => $components
         ]);
     }
 
@@ -176,6 +225,7 @@ class PlanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $request->validate([
             'name_ar'           => 'required',
             'name_en'           => 'required',
@@ -183,16 +233,16 @@ class PlanController extends Controller
             'details_en'        => 'required',
             'duration'          => 'required',
             'new_price'         => 'required',
-            'meal_name_ar'      => 'array|min:1',
-            'meal_name_en'      => 'array|min:1',
+            // 'meal_name_ar'      => 'array|min:1',
+            // 'meal_name_en'      => 'array|min:1',
             'meal_details_ar'   => 'array|min:1',
             'meal_details_en'   => 'array|min:1',
             'meal_price'        => 'array|min:1',
             'quantity'          => 'array|min:1',
             'max'               => 'array|min:1',
             'min'               => 'array|min:1',
-            'meal_name_ar.*'    => 'required',
-            'meal_name_en.*'    => 'required',
+            // 'meal_name_ar.*'    => 'required',
+            // 'meal_name_en.*'    => 'required',
             'meal_details_ar.*' => 'required',
             'meal_details_en.*' => 'required',
             'meal_price.*'      => 'required',
@@ -206,8 +256,8 @@ class PlanController extends Controller
             'details_en'        => trans('admin.Details En'),
             'duration'        => trans('admin.Duration'),
             'new_price'        => trans('admin.New Price'),
-            'meal_name_ar'        => trans('admin.Meal Name Ar'),
-            'meal_name_en'        => trans('admin.Meal Name En'),
+            // 'meal_name_ar'        => trans('admin.Meal Name Ar'),
+            // 'meal_name_en'        => trans('admin.Meal Name En'),
             'meal_details_ar'        => trans('admin.Meal Details Ar'),
             'meal_details_en'        => trans('admin.Meal Details En'),
             'meal_price'        => trans('admin.Meal Price'),
@@ -234,20 +284,29 @@ class PlanController extends Controller
 
         PlanMeal::where('plan_id', $plan->id)->delete();
 
-        if ($request->meal_name_ar) {
-            foreach ($request->meal_name_ar as $index => $meal_ar) {
-                if ($request->meal_name_ar[$index] != "") {
+        if ($request->meal_details_ar) {
+            foreach ($request->meal_details_ar as $index => $meal_ar) {
+                if ($request->meal_details_ar[$index] != "") {
                     $meal = new PlanMeal();
                     $meal->plan_id = $plan->id;
-                    $meal->name_ar = $request->meal_name_ar[$index];
-                    $meal->name_en = $request->meal_name_en[$index];
+                    // $meal->name_ar = $request->meal_name_ar[$index];
+                    // $meal->name_en = $request->meal_name_en[$index];
                     $meal->price = $request->meal_price[$index];
                     $meal->details_ar = $request->meal_details_ar[$index];
                     $meal->details_en = $request->meal_details_en[$index];
                     $meal->quantity = $request->quantity[$index];
                     $meal->max = $request->max[$index];
                     $meal->min = $request->min[$index];
+                    $meal->meal_id = $request->meal[$index];
+                    $meal->category_id = $request->category[$index];
                     $meal->save();
+
+                    foreach($request->components as $component){
+                        MealComponents::create([
+                            'component_id' => $component,
+                            'plan_meal_id' => $meal->id
+                        ]);
+                    }
                 }
             }
         }

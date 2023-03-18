@@ -8,8 +8,12 @@ use App\Http\Resources\Slider\SlidersResource;
 use App\Http\Resources\Subscription\SubscriptionDetailsResource;
 use App\Http\Resources\Wallet\WalletResource;
 use App\Models\Calory;
+use App\Models\Category;
+use App\Models\Component;
+use App\Models\MealComponents;
 use App\Models\Package;
 use App\Models\Plan;
+use App\Models\PlanMeal;
 use App\Models\Slider;
 use App\Models\Subscription;
 use Carbon\Carbon;
@@ -99,17 +103,60 @@ class HomeController extends Controller
         }
     }
 
-    public function getMenu(){
+    public function getMenu(Request $request){
         try {
             $user = userLogin();
             $subscription = Subscription::where('user_id', $user->id)->first();
+            $categories = Category::select([
+                'id',
+                $request->header('Accept-Language').'_name as name'
+            ])->get();
             $plan = Plan::whereId($subscription->plan_id)->first();
-            $package = Package::whereId($plan->package_id)->first();
+            $plan_meals = PlanMeal::select([
+                'id',
+                'plan_id',
+                'details_'.$request->header('Accept-Language').' as details',
+                'meal_id',
+                'category_id'
+            ])->where('plan_id',$plan->id)->get();
+            
+            $data = Package::whereId($plan->package_id)->first();
 
-            // return $plan;
+            // $plan->meals = $plan_meals;
 
-            $package = new PackageResource(Package::with('plans.meals.image')->where('id',$package->id)->first());
-            return responseSuccess($package->name, $package);
+
+            // foreach($plan_meals as $meal){
+            //     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
+            //     foreach($components as $c){
+            //         $meal->components = Component::whereId($c->component_id)->get();
+            //     }
+            // }
+
+            foreach($categories as $cate){
+                foreach($plan_meals as $meal){
+                    $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
+                    foreach($components as $c){
+                        $meal->components = Component::select([
+                            'id',
+                            $request->header('Accept-Language').'_name as name'
+                        ])->whereId($c->component_id)->get();
+                    }
+
+                    if($meal->category_id == $cate->id){
+                        $cate_meals[] = $meal;
+                    }
+
+                    $plan[$cate->name] = $cate_meals;
+                }
+            }
+
+            // return $plan_meals;
+
+
+            $data->plan = $plan;
+
+
+            return responseSuccess($data->name, $data);
         } catch (Exception $ex) {
             return responseError($ex);
         }

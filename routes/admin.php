@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ContactsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GoalCategoriesController;
 use App\Http\Controllers\Admin\GoalsController;
+use App\Http\Controllers\Admin\MealsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PlanController;
@@ -191,6 +192,15 @@ Route::group(['middleware' => 'Lang'], function () {
                 Route::get('edit/{component}', [ComponentsController::class, 'edit']);
                 Route::post('update/{component}', [ComponentsController::class, 'update']);
                 Route::post('delete/{id}', [ComponentsController::class, 'destroy']);
+            });
+
+            Route::group(['prefix' => 'meals'], function(){
+                Route::get('', [MealsController::class, 'index']);
+                Route::get('create', [MealsController::class, 'create']);
+                Route::post('store', [MealsController::class, 'store']);
+                Route::get('edit/{meal}', [MealsController::class, 'edit']);
+                Route::post('update/{meal}', [MealsController::class, 'update']);
+                Route::post('delete/{id}', [MealsController::class, 'destroy']);
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {

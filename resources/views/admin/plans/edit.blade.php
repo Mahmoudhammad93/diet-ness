@@ -77,6 +77,44 @@
                         <div class="row">
                             <div class="col-md-11">
                                 <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Categories') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="category[]" id="category" class="form-control">
+                                            @foreach ($categories as $category)
+                                                <option value="{{$category->id}}" {{($category->id == $meal->category_id)?'selected':''}}>{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Meals') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="meal[]" id="category" class="form-control">
+                                            @foreach ($meals as $obj)
+                                                <option value="{{$obj->id}}" {{($obj->id == $meal->meal_id)?'selected':''}}>{{$obj->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Components') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="components[]" id="category" class="form-control" multiple>
+                                            @foreach ($components as $component)
+                                                <option value="{{$component->id}}" {{(in_array($component->id, json_decode($meal->components)))? 'selected' : ''}}>{{$component->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="floating-label" for="meal_name_ar">{{ trans('admin.Name Ar') }} <span
                                                 class="redStar">*</span></label>
@@ -148,7 +186,7 @@
                     <div id="mealsArea">
                         <div class="row">
                             <div class="col-md-11">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="floating-label" for="meal_details_ar">{{ trans('admin.Categories') }}
                                             <span class="redStar">*</span></label>
@@ -174,6 +212,49 @@
                                             <span class="redStar">*</span></label>
                                         <input type="text" name="meal_name_en[]" class="form-control"
                                             id="meal_name_en">
+                                    </div>
+                                </div> --}}
+                                <div class="form-group">
+                                    <label class="floating-label" for="image">{{ trans('admin.Image') }} <span class="redStar">*</span></label>
+                                    <input type="file" name="image" class="form-control" id="image">
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Categories') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="category[]" id="category" class="form-control">
+                                            @foreach ($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Meals') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="meal[]" id="category" class="form-control">
+                                            @foreach ($meals as $meal)
+                                                <option value="{{$meal->id}}">{{$meal->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="floating-label" for="meal_details_ar">{{ trans('admin.Components') }}
+                                            <span class="redStar">*</span></label>
+
+                                        <select name="components[]" id="category" class="form-control" multiple>
+                                            @foreach ($components as $component)
+                                                <option value="{{$component->id}}">{{$component->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

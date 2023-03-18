@@ -14,27 +14,29 @@ class PlanMeal extends Model
     protected $hidden = [
         'name_ar',
         'name_en',
-        'details_ar',
-        'details_en',
+        // 'details_ar',
+        // 'details_en',
+        // 'meal_id',
+        // 'category_id'
     ];
 
-    protected $appends = ['name','details'];
+    // protected $appends = ['name','details'];
 
-    public function getNameAttribute()
-    {
-        if (Lang() == "ar") {
-            return $this->name_ar;
-        }
-        return $this->name_en;
-    }
+    // public function getNameAttribute()
+    // {
+    //     if (Lang() == "ar") {
+    //         return $this->name_ar;
+    //     }
+    //     return $this->name_en;
+    // }
 
-    public function getDetailsAttribute()
-    {
-        if (Lang() == "ar") {
-            return $this->details_ar;
-        }
-        return $this->details_en;
-    }
+    // public function getDetailsAttribute()
+    // {
+    //     if (Lang() == "ar") {
+    //         return $this->details_ar;
+    //     }
+    //     return $this->details_en;
+    // }
 
     public function image()
     {

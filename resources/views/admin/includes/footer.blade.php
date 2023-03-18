@@ -39,6 +39,7 @@
 <script src="{{ asset('dashboard') }}/ion-sound/ion.sound.js"></script>
 <script src="{{ asset('dashboard') }}/ion-sound/ion.sound.min.js"></script>
 <script src="{{ asset('dashboard') }}/assets/js/custom.js"></script>
+<script src="{{ asset('dashboard/assets/js/jquery.multiselect.js') }}"></script>
 {{-- <script src="{{ asset('dashboard') }}/assets/js/theme-customizer/customizer.js"></script> --}}
 <!-- login js-->
 <!-- Plugin used-->
