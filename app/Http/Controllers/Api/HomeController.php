@@ -122,6 +122,8 @@ class HomeController extends Controller
             
             $data = Package::whereId($plan->package_id)->first();
 
+            return $plan_meals;
+
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
                     $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
