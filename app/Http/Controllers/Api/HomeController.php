@@ -127,7 +127,7 @@ class HomeController extends Controller
 
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
-                    $components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
+                    $meal->components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
                     $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
                     if($rate != null){
                         $meal->rate = $rate;
@@ -135,11 +135,11 @@ class HomeController extends Controller
                         $rate['num'] = 0;
                         $meal->rate = $rate;
                     }
-                    foreach($components as $c){
-                        $meal->components = Component::select([
+                    foreach($meal->components as $c){
+                        $c->c_details = Component::select([
                             'id',
                             $request->header('Accept-Language').'_name as name'
-                        ])->whereId($c->component_id)->get();
+                        ])->whereId($c->component_id)->first();
                     }
 
                     if($meal->category_id == $cate->id){
