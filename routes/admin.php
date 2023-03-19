@@ -148,6 +148,7 @@ Route::group(['middleware' => 'Lang'], function () {
                     Route::get('create/{id}', [PlanController::class, 'create']);
                     Route::get('edit/{id}', [PlanController::class, 'edit']);
                     Route::post('create/{id}', [PlanController::class, 'store']);
+                    Route::get('view/{id}', [PlanController::class, 'show']);
                     Route::post('update/{id}', [PlanController::class, 'update']);
                     Route::post('delete', [PlanController::class, 'destroy']);
                 });

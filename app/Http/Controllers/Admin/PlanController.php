@@ -182,6 +182,7 @@ class PlanController extends Controller
     public function show($id)
     {
         $plan = Plan::where('id', $id)->with('package', 'meals')->first();
+        // return $plan;
         return view('admin.plans.view', [
             'title' => $plan->package->name . " - " . $plan->name,
             'plan' => $plan

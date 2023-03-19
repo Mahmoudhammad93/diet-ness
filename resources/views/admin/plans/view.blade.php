@@ -12,15 +12,7 @@
                             <tbody>
                                 <tr>
                                     <td>{{ trans('admin.Name') }}</td>
-                                    <td>{{ $package->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ trans('admin.Description') }}</td>
-                                    <td>{{ $package->description }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ trans('admin.Plans') }}</td>
-                                    <td>{{ $package->plans_count }}</td>
+                                    <td>{{ $plan->name }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -34,7 +26,7 @@
         <div class="card">
             <div class="card-header">
                 <h5>{{ trans('admin.Plans') }}
-                    <a href="{{ aurl('packages/plans/create/' . $package->id) }}"
+                    <a href="{{ aurl('packages/plans/create/' . $plan->id) }}"
                         class="btn btn-pill btn-outline-primary btn-air-primary pull-right"><i class="fas fa-plus"></i>
                         {{ trans('admin.Add New Plan') }}</a>
                 </h5>
@@ -48,51 +40,41 @@
                                     <th>#</th>
                                     <th>{{ trans('admin.Name') }}</th>
                                     <th>{{ trans('admin.Details') }}</th>
-                                    <th>{{ trans('admin.Price') }}</th>
                                     <th>{{ trans('admin.Duration') }}</th>
                                     <th>{{ trans('admin.Is Default') }}</th>
                                     <th>{{ trans('admin.Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($plans as $plan)
-                                    <tr>
-                                        <td>{{ $plan->id }}</td>
-                                        <td>{{ $plan->name }}</td>
-                                        <td>{{ $plan->details }}</td>
-                                        <td>
-                                            {{ $plan->new_price }} {{ trans('admin.KWD') }}
-                                            @if ($plan->old_price)
-                                                <br>
-                                                <del>{{ $plan->old_price }} {{ trans('admin.KWD') }} </del>
-                                            @endif
-                                        </td>
-                                        <td>{{ $plan->duration }} {{ trans('admin.Day') }}</td>
-                                        <td>
-                                            @if ($plan->is_default)
-                                                <i class="fas fa-check text-success"></i>
-                                            @else
-                                                <i class="fas fa-times text-danger"></i>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ aurl('plans/view/' . $plan->id) }}"
-                                                class="btn btn-pill btn-outline-primary btn-air-primary"><i
-                                                    class="fas fa-eye"></i>
-                                                {{ trans('admin.View') }}</a>
+                                <tr>
+                                    <td>{{ $plan->id }}</td>
+                                    <td>{{ $plan->name }}</td>
+                                    <td>{{ $plan->details }}</td>
+                                    <td>{{ $plan->duration }} {{ trans('admin.Day') }}</td>
+                                    <td>
+                                        @if ($plan->is_default)
+                                            <i class="fas fa-check text-success"></i>
+                                        @else
+                                            <i class="fas fa-times text-danger"></i>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ aurl('plans/view/' . $plan->id) }}"
+                                            class="btn btn-pill btn-outline-primary btn-air-primary"><i
+                                                class="fas fa-eye"></i>
+                                            {{ trans('admin.View') }}</a>
 
-                                            <a href="{{ aurl('plans/edit/' . $plan->id) }}"
-                                                class="btn btn-pill btn-outline-warning btn-air-warning"><i
-                                                    class="fas fa-edit"></i>
-                                                {{ trans('admin.Edit') }}</a>
+                                        <a href="{{ aurl('plans/edit/' . $plan->id) }}"
+                                            class="btn btn-pill btn-outline-warning btn-air-warning"><i
+                                                class="fas fa-edit"></i>
+                                            {{ trans('admin.Edit') }}</a>
 
-                                            <button data-id="{{ $plan->id }}" data-name="{{ $plan->name }}"
-                                                id="delete" class="btn btn-pill btn-outline-danger btn-air-danger"><i
-                                                    class="fas fa-trash"></i>
-                                                {{ trans('admin.Delete') }}</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        <button data-id="{{ $plan->id }}" data-name="{{ $plan->name }}"
+                                            id="delete" class="btn btn-pill btn-outline-danger btn-air-danger"><i
+                                                class="fas fa-trash"></i>
+                                            {{ trans('admin.Delete') }}</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
