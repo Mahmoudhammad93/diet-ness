@@ -76,6 +76,13 @@
                     @foreach ($plan->meals as $meal)
                         <div class="row">
                             <div class="col-md-11">
+                                <div class="image" style="width: 150px;height: 150px">
+                                    <img src="{{$meal->image}}" alt="" style="width: 100%;height: 100%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="floating-label" for="image">{{ trans('admin.Image') }} <span class="redStar">*</span></label>
+                                    <input type="file" name="image[]" class="form-control" id="image">
+                                </div>
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="floating-label" for="meal_details_ar">{{ trans('admin.Categories') }}
@@ -216,7 +223,7 @@
                                 </div> --}}
                                 <div class="form-group">
                                     <label class="floating-label" for="image">{{ trans('admin.Image') }} <span class="redStar">*</span></label>
-                                    <input type="file" name="image" class="form-control" id="image">
+                                    <input type="file" name="image[]" class="form-control" id="image">
                                 </div>
 
                                 <div class="row">

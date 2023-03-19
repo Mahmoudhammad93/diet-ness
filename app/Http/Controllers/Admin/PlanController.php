@@ -131,6 +131,14 @@ class PlanController extends Controller
             foreach ($request->meal_details_ar as $index => $meal_ar) {
                 if ($request->meal_details_ar[$index] != "") {
                     $meal = new PlanMeal();
+                    if($request->hasFile('image')){
+                        // return $request;
+                        $file = $request->image[$index];
+                        $originFileName = $file->getClientOriginalName();
+                        $fileName = time().'.'.$file->getClientOriginalExtension();
+                        $file->move(public_path('storage/meals'), $fileName);
+                        $meal->image = $fileName;
+                    }
                     $meal->plan_id = $plan->id;
                     // $meal->name_ar = $request->meal_name_ar[$index];
                     // $meal->name_en = $request->meal_name_en[$index];
@@ -188,8 +196,9 @@ class PlanController extends Controller
      */
     public function edit($id)
     {
-        // return gettype(app()->getLocale());
+
         $plan = Plan::where('id', $id)->with('package', 'meals')->first();
+        // return $plan;
         foreach($plan->meals as $meal){
             $meal->components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->pluck('component_id');
         }
@@ -288,6 +297,17 @@ class PlanController extends Controller
             foreach ($request->meal_details_ar as $index => $meal_ar) {
                 if ($request->meal_details_ar[$index] != "") {
                     $meal = new PlanMeal();
+                    if($request->hasFile('image')){
+                        // return $request;
+                        if(isset($request->image[$index])){
+                            // return $request->image[$index];
+                            $file = $request->image[$index];
+                            $originFileName = $file->getClientOriginalName();
+                            $fileName = time().'.'.$file->getClientOriginalExtension();
+                            $file->move(public_path('storage/meals'), $fileName);
+                            $meal->image = $fileName;
+                        }
+                    }
                     $meal->plan_id = $plan->id;
                     // $meal->name_ar = $request->meal_name_ar[$index];
                     // $meal->name_en = $request->meal_name_en[$index];
@@ -319,7 +339,7 @@ class PlanController extends Controller
             'status' => 'update'
         ]);
 
-        return redirect(aurl('packages/view/' . $request->package_id))->with("success" . "Updated Success");
+        return redirect(aurl('packages/view/' . $plan->id))->with("success" . "Updated Success");
     }
 
     /**

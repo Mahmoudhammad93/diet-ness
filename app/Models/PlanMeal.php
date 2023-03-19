@@ -38,6 +38,10 @@ class PlanMeal extends Model
     //     return $this->details_en;
     // }
 
+    public function getImageAttribute($image){
+        return ($image)? asset('storage/meals/'.$image): asset('storage/meals/default.png');
+    }
+
     public function image()
     {
         return $this->morphOne(Media::class, 'mediaable');

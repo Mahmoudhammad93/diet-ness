@@ -92,7 +92,7 @@
                                 </div> --}}
                                 <div class="form-group">
                                     <label class="floating-label" for="image">{{ trans('admin.Image') }} <span class="redStar">*</span></label>
-                                    <input type="file" name="image" class="form-control" id="image">
+                                    <input type="file" name="image[]" class="form-control" id="image">
                                 </div>
 
                                 <div class="row">

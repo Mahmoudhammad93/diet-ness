@@ -115,7 +115,8 @@ class HomeController extends Controller
                 'plan_id',
                 'details_'.$request->header('Accept-Language').' as details',
                 'meal_id',
-                'category_id'
+                'category_id',
+                'image'
             ])->where('plan_id',$plan->id)->get();
             
             $data = Package::whereId($plan->package_id)->first();
@@ -127,7 +128,7 @@ class HomeController extends Controller
 
             foreach($categories as $cate){
                 foreach($plan_meals as $meal){
-                    $meal->components = MealComponents::select('id', 'component_id')->where('plan_meal_id', $meal->id)->get();
+                    $meal->components = MealComponents::select('component_id')->where('plan_meal_id', $meal->id)->get();
                     $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
                     if($rate != null){
                         $meal->rate = $rate;
@@ -136,14 +137,15 @@ class HomeController extends Controller
                         $meal->rate = $rate;
                     }
                     foreach($meal->components as $c){
-                        $c->c_details = Component::select([
+                        $c_details = Component::select([
                             'id',
                             $request->header('Accept-Language').'_name as name'
                         ])->whereId($c->component_id)->first();
+                        $c->name = $c_details->name;
                     }
 
                     if($meal->category_id == $cate->id){
-                        $cate_meals[] = $meal;
+                        $cate_meals['meals'] = $meal;
                         $plan[$cate->name] = $cate_meals;
                     }
 
