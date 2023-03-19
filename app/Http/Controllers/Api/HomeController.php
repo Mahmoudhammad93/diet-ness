@@ -109,10 +109,6 @@ class HomeController extends Controller
         try {
             $user = userLogin();
             $subscription = Subscription::where('user_id', $user->id)->first();
-            $categories = Category::select([
-                'id',
-                $request->header('Accept-Language').'_name as name'
-            ])->get();
             $plan = Plan::whereId($subscription->plan_id)->first();
             $plan_meals = PlanMeal::select([
                 'id',
@@ -123,6 +119,10 @@ class HomeController extends Controller
             ])->where('plan_id',$plan->id)->get();
             
             $data = Package::whereId($plan->package_id)->first();
+            $categories = Category::select([
+                'id',
+                $request->header('Accept-Language').'_name as name'
+            ])->get();
 
 
             foreach($categories as $cate){
@@ -144,10 +144,10 @@ class HomeController extends Controller
 
                     if($meal->category_id == $cate->id){
                         $cate_meals[] = $meal;
+                        $plan[$cate->name] = $cate_meals;
                     }
 
 
-                    $plan[$cate->name] = $cate_meals;
                 }
             }
 
