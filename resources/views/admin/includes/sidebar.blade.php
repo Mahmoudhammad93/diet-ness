@@ -90,6 +90,7 @@
                                 <li><a href="{{ aurl('packages') }}">{{ trans('admin.All Packages') }}</a></li>
                                 <li><a href="{{ aurl('packages/create') }}">{{ trans('admin.Add New Package') }}</a></li>
                                 <li><a href="{{ aurl('meals') }}">{{ trans('admin.Meals') }}</a></li>
+                                <li><a href="{{ aurl('meals/components') }}">{{ trans('admin.Meal Components') }}</a></li>
                             </ul>
                         </li>
 

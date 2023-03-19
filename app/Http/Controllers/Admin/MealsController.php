@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Component;
 use App\Models\Meal;
+use App\Models\PlanMeal;
 use Illuminate\Http\Request;
 
 class MealsController extends Controller
@@ -92,6 +94,12 @@ class MealsController extends Controller
         $meal->update($request->all());
 
         return redirect('admin/meals');
+    }
+
+    public function meal_components(){
+        return view('admin.meals.components.index', [
+            'title' => trans('admin.Meal Components')
+        ]);
     }
 
     /**

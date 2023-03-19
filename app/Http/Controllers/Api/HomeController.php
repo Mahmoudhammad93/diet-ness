@@ -114,44 +114,74 @@ class HomeController extends Controller
                 'id',
                 'plan_id',
                 'details_'.$request->header('Accept-Language').' as details',
+                'name_'.$request->header('Accept-Language').' as name',
                 'meal_id',
                 'category_id',
-                'image'
+                'image',
+                'quantity'
             ])->where('plan_id',$plan->id)->get();
             
             $data = Package::whereId($plan->package_id)->first();
-            $categories = Category::select([
-                'id',
-                $request->header('Accept-Language').'_name as name'
-            ])->get();
 
+            foreach($plan_meals as $meal){
+                $categories[] = Category::select([
+                    app()->getLocale().'_name as title'
+                ])->whereId($meal->category_id)->first();
 
-            foreach($categories as $cate){
-                foreach($plan_meals as $meal){
-                    $meal->components = MealComponents::select('component_id')->where('plan_meal_id', $meal->id)->get();
-                    $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
-                    if($rate != null){
-                        $meal->rate = $rate;
-                    }else{
-                        $rate['num'] = 0;
-                        $meal->rate = $rate;
-                    }
-                    foreach($meal->components as $c){
-                        $c_details = Component::select([
-                            'id',
-                            $request->header('Accept-Language').'_name as name'
-                        ])->whereId($c->component_id)->first();
-                        $c->name = $c_details->name;
-                    }
-
-                    if($meal->category_id == $cate->id){
-                        $cate_meals['meals'] = $meal;
-                        $plan[$cate->name] = $cate_meals;
-                    }
-
-
+                foreach($categories as $cate){
+                    $cate->meals = $meal;
                 }
+
+                $meal->components = MealComponents::select('component_id')->where('plan_meal_id', $meal->id)->get();
+                
+                foreach($meal->components as $c){
+                    $c_details = Component::select([
+                        'id',
+                        $request->header('Accept-Language').'_name as name'
+                    ])->whereId($c->component_id)->first();
+                    $c->name = $c_details->name;
+                }
+
+                $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
+                if($rate != null){
+                    $meal->rate = $rate;
+                }else{
+                    $rate['num'] = 0;
+                    $meal->rate = $rate;
+                }
+
+                $meal->calouries = $meal->quantity;
             }
+            $plan['data'] = $categories;
+
+            // foreach($categories as $cate){
+            //     foreach($plan_meals as $meal){
+            //         $meal->components = MealComponents::select('component_id')->where('plan_meal_id', $meal->id)->get();
+            //         $rate = Rate::select('id', 'num')->where('meal_id', $meal->id)->where('user_id', $user->id)->first();
+            //         if($rate != null){
+            //             $meal->rate = $rate;
+            //         }else{
+            //             $rate['num'] = 0;
+            //             $meal->rate = $rate;
+            //         }
+            //         foreach($meal->components as $c){
+            //             $c_details = Component::select([
+            //                 'id',
+            //                 $request->header('Accept-Language').'_name as name'
+            //             ])->whereId($c->component_id)->first();
+            //             $c->name = $c_details->name;
+            //         }
+
+            //         if($meal->category_id == $cate->id){
+            //             $cate_meals['meals'] = $meal;
+            //             $categories[] = $cate;
+            //             $plan['data'] = $categories;
+            //             // $plan[$cate->name] = $cate_meals;
+            //         }
+
+
+            //     }
+            // }
 
             // return $plan_meals;
 

@@ -12,8 +12,8 @@ class PlanMeal extends Model
     public $guarded = [];
 
     protected $hidden = [
-        'name_ar',
-        'name_en',
+        // 'name_ar',
+        // 'name_en',
         // 'details_ar',
         // 'details_en',
         // 'meal_id',

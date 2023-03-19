@@ -140,8 +140,8 @@ class PlanController extends Controller
                         $meal->image = $fileName;
                     }
                     $meal->plan_id = $plan->id;
-                    // $meal->name_ar = $request->meal_name_ar[$index];
-                    // $meal->name_en = $request->meal_name_en[$index];
+                    $meal->name_ar = $request->meal_name_ar[$index];
+                    $meal->name_en = $request->meal_name_en[$index];
                     $meal->price = $request->meal_price[$index];
                     $meal->details_ar = $request->meal_details_ar[$index];
                     $meal->details_en = $request->meal_details_en[$index];
@@ -242,16 +242,16 @@ class PlanController extends Controller
             'details_en'        => 'required',
             'duration'          => 'required',
             'new_price'         => 'required',
-            // 'meal_name_ar'      => 'array|min:1',
-            // 'meal_name_en'      => 'array|min:1',
+            'meal_name_ar'      => 'array|min:1',
+            'meal_name_en'      => 'array|min:1',
             'meal_details_ar'   => 'array|min:1',
             'meal_details_en'   => 'array|min:1',
             'meal_price'        => 'array|min:1',
             'quantity'          => 'array|min:1',
             'max'               => 'array|min:1',
             'min'               => 'array|min:1',
-            // 'meal_name_ar.*'    => 'required',
-            // 'meal_name_en.*'    => 'required',
+            'meal_name_ar.*'    => 'required',
+            'meal_name_en.*'    => 'required',
             'meal_details_ar.*' => 'required',
             'meal_details_en.*' => 'required',
             'meal_price.*'      => 'required',
@@ -265,8 +265,8 @@ class PlanController extends Controller
             'details_en'        => trans('admin.Details En'),
             'duration'        => trans('admin.Duration'),
             'new_price'        => trans('admin.New Price'),
-            // 'meal_name_ar'        => trans('admin.Meal Name Ar'),
-            // 'meal_name_en'        => trans('admin.Meal Name En'),
+            'meal_name_ar'        => trans('admin.Meal Name Ar'),
+            'meal_name_en'        => trans('admin.Meal Name En'),
             'meal_details_ar'        => trans('admin.Meal Details Ar'),
             'meal_details_en'        => trans('admin.Meal Details En'),
             'meal_price'        => trans('admin.Meal Price'),
@@ -309,8 +309,8 @@ class PlanController extends Controller
                         }
                     }
                     $meal->plan_id = $plan->id;
-                    // $meal->name_ar = $request->meal_name_ar[$index];
-                    // $meal->name_en = $request->meal_name_en[$index];
+                    $meal->name_ar = $request->meal_name_ar[$index];
+                    $meal->name_en = $request->meal_name_en[$index];
                     $meal->price = $request->meal_price[$index];
                     $meal->details_ar = $request->meal_details_ar[$index];
                     $meal->details_en = $request->meal_details_en[$index];

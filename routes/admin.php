@@ -201,6 +201,9 @@ Route::group(['middleware' => 'Lang'], function () {
                 Route::get('edit/{meal}', [MealsController::class, 'edit']);
                 Route::post('update/{meal}', [MealsController::class, 'update']);
                 Route::post('delete/{id}', [MealsController::class, 'destroy']);
+                Route::group(['prefix' => 'components'], function(){
+                    Route::get('', [MealsController::class, 'meal_components']);
+                });
             });
 
             Route::group(['prefix' => 'subscriptions'], function () {

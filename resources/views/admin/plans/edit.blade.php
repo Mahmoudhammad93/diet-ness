@@ -205,7 +205,7 @@
                                             <option value="">سناكس</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="row">
                                     <div class="form-group col-md-6">
@@ -220,7 +220,7 @@
                                         <input type="text" name="meal_name_en[]" class="form-control"
                                             id="meal_name_en">
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="form-group">
                                     <label class="floating-label" for="image">{{ trans('admin.Image') }} <span class="redStar">*</span></label>
                                     <input type="file" name="image[]" class="form-control" id="image">
